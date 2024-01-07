@@ -1,24 +1,24 @@
-"""
-С помощью команды ps можно посмотреть список запущенных процессов.
-С флагами aux эта команда выведет информацию обо всех процессах, запущенных в системе.
+import os.path
 
-Запустите эту команду и сохраните выданный результат в файл:
-
-$ ps aux > output_file.txt
-
-Столбец RSS показывает информацию о потребляемой памяти в байтах.
-
-Напишите функцию get_summary_rss, которая на вход принимает путь до файла с результатом выполнения команды ps aux,
-а возвращает суммарный объём потребляемой памяти в человекочитаемом формате.
-Это означает, что ответ надо перевести в байты, килобайты, мегабайты и так далее.
-"""
+PATH_TO_OUTPUT_FILE = os.path.abspath("output_file.txt")
 
 
 def get_summary_rss(ps_output_file_path: str) -> str:
-    ...
+    memory_sum = 0
+    with open(ps_output_file_path, "r") as file:
+        for line in file:
+            try:
+                mem_chunk: int = int(line.split()[5:6][0])
+                memory_sum += mem_chunk
+            except ValueError:
+                pass
+    result: str = str(memory_sum // 1024) + ' Kb'
+    return result
 
+
+get_summary_rss(PATH_TO_OUTPUT_FILE)
 
 if __name__ == '__main__':
-    path: str = 'PATH_TO_OUTPUT_FILE'
+    path: str = PATH_TO_OUTPUT_FILE
     summary_rss: str = get_summary_rss(path)
     print(summary_rss)

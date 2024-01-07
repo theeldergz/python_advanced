@@ -38,7 +38,7 @@ import sys
 
 
 def decrypt(encryption: str) -> str:
-    ...
+    pass
 
 
 if __name__ == '__main__':
