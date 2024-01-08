@@ -29,6 +29,7 @@ hello wo
 hello world!
 """
 
+import os
 from flask import Flask
 
 app = Flask(__name__)
@@ -36,7 +37,12 @@ app = Flask(__name__)
 
 @app.route("/head_file/<int:size>/<path:relative_path>")
 def head_file(size: int, relative_path: str):
-    ...
+    file_name = relative_path.split('/')[-1]
+    abs_path = os.path.abspath(file_name)
+    with open(abs_path) as file:
+        result_text = file.read(size)
+    result_answer = f'<b>{abs_path}</b><br>{result_text}'
+    return result_answer
 
 
 if __name__ == "__main__":

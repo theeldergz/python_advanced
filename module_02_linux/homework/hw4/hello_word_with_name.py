@@ -8,14 +8,25 @@
 """
 
 from flask import Flask
+from datetime import datetime
+
+WEEKDAYS_NAMES = (
+    "Понедельник(а)",
+    "Вторник(а)",
+    "Среды",
+    "Пятницы",
+    "Субботы",
+    "Воскресенья",
+)
 
 app = Flask(__name__)
 
 
-@app.route('/hello-world/...')
-def hello_world():
-    ...
+@app.route("/hello-world/<username>")
+def hello_world(username):
+    weekday = datetime.today().weekday()
+    return f"Привет, {username}. Хорошей {WEEKDAYS_NAMES[weekday]}!"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
