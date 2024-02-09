@@ -1,5 +1,5 @@
 from unittest import TestCase
-from datetime import datetime
+from datetime import datetime, timedelta
 from freezegun import freeze_time
 from module_03_ci_culture_beginning.homework.hw1.hello_word_with_day import GREETINGS, app
 
@@ -13,12 +13,18 @@ class TestModule3HomeWork(TestCase):
 
     @freeze_time('2024-02-06')
     def test_can_get_correct_weekday(self):
-        username = 'среды'
-        response = self.app.get(self.base_url + username)
-        response_text = response.data.decode()
-        weekday = datetime.today().weekday()
-        greetings = GREETINGS[weekday]
-        self.assertTrue(greetings in response_text)
+        username = 'username'
+        datetime_now = datetime.now()
+
+        for day_num in range(8):
+            response = self.app.get(self.base_url + username)
+            response_text = response.data.decode()
+
+            delta = timedelta(days=day_num)
+            datetime_then = datetime_now + delta
+            weekday = datetime_then.today().weekday()
+            greetings = GREETINGS[weekday]
+            self.assertTrue(greetings in response_text)
 
     def test_can_get_correct_username(self):
         username = 'username'
