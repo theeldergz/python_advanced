@@ -8,21 +8,24 @@
 5) index (только числа, обязательно для заполнения);
 6) comment (текст, необязательно для заполнения).
 """
+from dataclasses import Field
 
-from flask import Flask
+from flask import Flask, request
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField
-from hw2_validators import number_length, NumberLength
+from wtforms.validators import InputRequired, Email, NumberRange
+from module_04_flask.homework.hw1_3.hw2_validators import number_length, NumberLength
+
 
 app = Flask(__name__)
 
 
 class RegistrationForm(FlaskForm):
-    email = StringField()
-    phone = IntegerField()
-    name = StringField()
-    address = StringField()
-    index = IntegerField()
+    email = StringField(validators=[InputRequired(), Email()])
+    phone = IntegerField(validators=[InputRequired(), NumberRange(min=1000000000, max=9999999999)])
+    name = StringField(validators=[InputRequired()])
+    address = StringField(validators=[InputRequired()])
+    index = IntegerField(validators=[InputRequired()])
     comment = StringField()
 
 
