@@ -4,17 +4,15 @@
 
 Сделать это можно с помощью команды uptime.
 """
-import psutil
+
 from flask import Flask
-from datetime import datetime
 
 app = Flask(__name__)
 
 
 @app.route("/uptime", methods=['GET'])
 def uptime() -> str:
-    sys_uptime = datetime.now() - datetime.fromtimestamp(psutil.boot_time())
-    return f'Current uptime is {sys_uptime}'
+    ...
 
 
 if __name__ == '__main__':
