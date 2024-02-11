@@ -8,14 +8,27 @@
 /ps?arg=a&arg=u&arg=x
 """
 
-from flask import Flask
+import shlex, subprocess
+import string
+from typing import List
+from flask import Flask, request
 
 app = Flask(__name__)
 
 
 @app.route("/ps", methods=["GET"])
 def ps() -> str:
-    ...
+    args: List[str] = request.args.getlist('arg')
+    command_str = ''.join([shlex.quote(s) for s in args])
+    command = f'ps {command_str}'
+    # result = subprocess.run(command_str, capture_output=True)
+    # output = result.stdout.decode(encoding='Windows-1251')
+
+    result = subprocess.run(command, capture_output=True)
+    output = result.stdout.decode()
+    print(command_str, command, result, output)
+    # return f'{output}'
+    return string.Template(f'<pre>{output}</pre>').substitute(output=output)
 
 
 if __name__ == "__main__":
