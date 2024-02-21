@@ -18,6 +18,7 @@
 import getpass
 import hashlib
 import logging
+import time
 
 logger = logging.getLogger("password_checker")
 
@@ -51,7 +52,10 @@ def input_and_check_password() -> bool:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    time_format = '%H:%M:%S'
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s – %(message)s',
+                        datefmt=time_format, filename='stderr.txt', encoding='utf-8')
+
     logger.info("Вы пытаетесь аутентифицироваться в Skillbox")
     count_number: int = 3
     logger.info(f"У вас есть {count_number} попыток")
