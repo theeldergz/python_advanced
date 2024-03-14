@@ -17,11 +17,34 @@
 Напишите функцию my_t9, которая принимает на вход строку, состоящую из цифр 2–9,
 и возвращает список слов английского языка, которые можно получить из этой последовательности цифр.
 """
+import re
 from typing import List
+
+nums = {
+    '2': 'abc',
+    '3': 'def',
+    '4': 'ghi',
+    '5': 'jkl',
+    '6': 'mno',
+    '7': 'pqrs',
+    '8': 'tuv',
+    '9': 'wxyz'
+}
 
 
 def my_t9(input_numbers: str) -> List[str]:
-    ...
+    output = []
+    pattern = r''
+    for key in input_numbers:
+        pattern += f'[{nums[key]}]'
+
+    with open('words.txt', 'r', encoding='utf-8') as file_words:
+        data = file_words.read()
+
+    match_words = re.findall(pattern, data)
+    match_words = list(set(match_words))
+
+    return match_words
 
 
 if __name__ == '__main__':

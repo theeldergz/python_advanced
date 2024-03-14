@@ -9,7 +9,10 @@
 import logging
 import random
 from typing import List
+from logs_formatter import JsFormatter
+from log_analysis import result
 
+json_formatter = JsFormatter()
 logger = logging.getLogger(__name__)
 
 
@@ -60,7 +63,18 @@ def measure_me(nums: List[int]) -> List[List[int]]:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level="DEBUG")
+    logging.basicConfig(level="INFO",
+                        format="time: %(asctime)s, level: %(levelname)s, message: %(message)s",
+                        handlers=[logging.FileHandler('logs_measure_me_level_info.json', mode='a')]
+                        )
+
+    file_handler = logging.getLogger().handlers[0]
+    file_handler.setFormatter(json_formatter)
+
     for it in range(15):
         data_line = get_data_line(10 ** 3)
+        logger.info('START')
         measure_me(data_line)
+        logger.info('END')
+
+    print(result())

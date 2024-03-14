@@ -71,14 +71,35 @@ def get_tree(max_depth: int, level: int = 1) -> Optional[BinaryTreeNode]:
 
 
 def restore_tree(path_to_log_file: str) -> BinaryTreeNode:
-    pass
+    with open(path_to_log_file, 'r', encoding='utf-8') as log_file:
+        data = log_file.readlines()
+
+    node_info_dict = {}
+    root_num = int(data[0][30:36])
+    binary_tree_root = BinaryTreeNode(val=root_num, left=None, right=None)
+
+    for log in data:
+        if log.startswith('INFO'):
+            node_value = int(log[30:36])
+            node_info_dict[node_value] = BinaryTreeNode(val=node_value)
+
+        if log.startswith('DEBUG') and 'left' in log:
+            node_value = int(log[73:79])
+            node_info_dict[node_value] = BinaryTreeNode(val=node_value,
+                                                        left=BinaryTreeNode(node_value))
+
+        if log.startswith('DEBUG') and 'right' in log:
+            node_value = int(log[74:80])
+            node_info_dict[node_value] = BinaryTreeNode(val=node_value,
+                                                        right=BinaryTreeNode(node_value))
+    return binary_tree_root
 
 
 if __name__ == "__main__":
     logging.basicConfig(
         level=logging.DEBUG,
         format="%(levelname)s:%(message)s",
-        filename="walk_log_4.txt",
+        filename="walk_log_6.txt",
     )
 
     root = get_tree(7)

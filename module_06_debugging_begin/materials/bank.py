@@ -1,4 +1,5 @@
 import csv
+import logging
 from typing import Optional
 
 from flask import Flask
@@ -38,4 +39,6 @@ def handle_exception(e: InternalServerError):
 
 
 if __name__ == "__main__":
-    app.run()
+    logging.basicConfig(level=logging.DEBUG, filename='bank_logs.log')
+    app.config["WTF_CSRF_ENABLED"] = False
+    app.run(debug=True)
