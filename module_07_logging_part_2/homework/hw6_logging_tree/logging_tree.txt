@@ -1,0 +1,16 @@
+<--""
+   Level DEBUG
+   Handler TimedRotatingFile '/home/runner/eductionloggingtree/python_logging.log' when='S' interval=10 backupCount=1
+     Level DEBUG
+     Formatter fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s' datefmt=None
+   Handler Stream <_io.TextIOWrapper name='<stderr>' mode='w' encoding='utf-8'>
+     Level DEBUG
+     Formatter fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s' datefmt=None
+   |
+   o<--"app_logger"
+       Level NOTSET so inherits level DEBUG
+       |
+       o   "app_logger.utils_logger"
+           Level NOTSET so inherits level DEBUG
+           Propagate OFF
+           Handler TimedRotatingFile '/home/runner/eductionloggingtree/utils.log' when='H' interval=36000 backupCount=1
