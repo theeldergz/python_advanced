@@ -1,12 +1,10 @@
-import logging
+import logging.config
 import sys
 from utils import string_to_operator
+from logging_config import dict_config
 
+logging.config.dictConfig(dict_config)
 app_logger = logging.getLogger('app_logger')
-custom_handler = logging.StreamHandler()
-formatter = logging.Formatter(fmt='%(name)s || %(levelname)s || %(message)s')
-custom_handler.setFormatter(formatter)
-app_logger.addHandler(custom_handler)
 app_logger.setLevel('DEBUG')
 
 
@@ -40,3 +38,5 @@ def calc(args):
 if __name__ == '__main__':
     # calc(sys.argv[1:])
     calc('2+3')
+    calc('2 ** 3')
+

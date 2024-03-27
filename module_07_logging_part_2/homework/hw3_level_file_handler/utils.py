@@ -1,6 +1,7 @@
 import logging
 from typing import Union, Callable
 from operator import sub, mul, truediv, add
+from logger_helper import get_logger
 
 
 OPERATORS = {
@@ -12,11 +13,8 @@ OPERATORS = {
 
 Numeric = Union[int, float]
 
-utils_logger = logging.getLogger('utils_logger')
-custom_handler = logging.StreamHandler()
-custom_handler.setLevel('DEBUG')
-formatter = logging.Formatter(fmt='%(name)s || %(levelname)s || %(message)s')
-custom_handler.setFormatter(formatter)
+
+utils_logger = get_logger('utils_logger')
 
 
 def string_to_operator(value: str) -> Callable[[Numeric, Numeric], Numeric]:

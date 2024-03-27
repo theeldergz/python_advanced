@@ -12,6 +12,7 @@ OPERATORS = {
 
 Numeric = Union[int, float]
 
+
 utils_logger = logging.getLogger('utils_logger')
 custom_handler = logging.StreamHandler()
 custom_handler.setLevel('DEBUG')

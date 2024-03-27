@@ -1,13 +1,9 @@
 import logging
 import sys
 from utils import string_to_operator
+from logger_helper import get_logger
 
-app_logger = logging.getLogger('app_logger')
-custom_handler = logging.StreamHandler()
-formatter = logging.Formatter(fmt='%(name)s || %(levelname)s || %(message)s')
-custom_handler.setFormatter(formatter)
-app_logger.addHandler(custom_handler)
-app_logger.setLevel('DEBUG')
+app_logger = get_logger('app_logger')
 
 
 def calc(args):
