@@ -1,17 +1,19 @@
 import logging
+import logging.config
 import sys
-from utils import string_to_operator
+import time
 
+from utils import string_to_operator, utils_logger
+from logger_config import base_config
+from log_filter import FilterWithoutASCII
+
+logging.config.dictConfig(base_config)
 app_logger = logging.getLogger('app_logger')
-custom_handler = logging.StreamHandler()
-formatter = logging.Formatter(fmt='%(name)s || %(levelname)s || %(message)s')
-custom_handler.setFormatter(formatter)
-app_logger.addHandler(custom_handler)
-app_logger.setLevel('DEBUG')
+app_logger.addFilter(FilterWithoutASCII())
 
 
 def calc(args):
-    app_logger.info(f'Arguments func {calc.__name__}: {args}')
+    app_logger.debug(f"Arguments: {args}")
 
     num_1 = args[0]
     operator = args[1]
@@ -36,7 +38,20 @@ def calc(args):
     app_logger.info(f"Result: {result}")
     app_logger.info(f"{num_1} {operator} {num_2} = {result}")
 
+    app_logger.debug('test debug')
+    app_logger.info('test info')
+    app_logger.warning('test warning')
+    app_logger.error('test error')
+    app_logger.critical('ÎŒØ∏‡°⁄·°€йцукен')
+
 
 if __name__ == '__main__':
-    # calc(sys.argv[1:])
-    calc('2+3')
+    for _ in range(300):
+        time.sleep(1)
+        calc('2+3')
+        try:
+            calc('2 + y')
+        except Exception:
+            pass
+
+

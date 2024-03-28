@@ -1,17 +1,22 @@
 import logging
+import logging.config
 import sys
-from utils import string_to_operator
+import time
+from logging_tree import printout
+from utils import string_to_operator, utils_logger
+from logger_config import base_config
 
+logging.config.dictConfig(base_config)
 app_logger = logging.getLogger('app_logger')
-custom_handler = logging.StreamHandler()
-formatter = logging.Formatter(fmt='%(name)s || %(levelname)s || %(message)s')
-custom_handler.setFormatter(formatter)
-app_logger.addHandler(custom_handler)
-app_logger.setLevel('DEBUG')
+
+with open('logging_tree2.txt', mode='w+', encoding='utf-8') as file:
+    sys.stdout = file
+    sys.stderr = file
+    printout()
 
 
 def calc(args):
-    app_logger.info(f'Arguments func {calc.__name__}: {args}')
+    app_logger.debug(f"Arguments: {args}")
 
     num_1 = args[0]
     operator = args[1]
@@ -38,5 +43,14 @@ def calc(args):
 
 
 if __name__ == '__main__':
-    # calc(sys.argv[1:])
-    calc('2+3')
+    for _ in range(300):
+        time.sleep(1)
+        calc('2+3')
+        try:
+            calc('2 + y')
+        except Exception as exc:
+            pass
+
+    print(app_logger.parent)
+    print(app_logger)
+    print(utils_logger)

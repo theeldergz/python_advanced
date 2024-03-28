@@ -1,7 +1,6 @@
-import logging
+import logging, logging.config, logging.handlers
 from typing import Union, Callable
 from operator import sub, mul, truediv, add
-
 
 OPERATORS = {
     '+': add,
@@ -13,10 +12,14 @@ OPERATORS = {
 Numeric = Union[int, float]
 
 utils_logger = logging.getLogger('utils_logger')
-custom_handler = logging.StreamHandler()
-custom_handler.setLevel('DEBUG')
-formatter = logging.Formatter(fmt='%(name)s || %(levelname)s || %(message)s')
-custom_handler.setFormatter(formatter)
+custom_handler = logging.handlers.TimedRotatingFileHandler(
+    filename='utils.log',
+    when='H',
+    interval=10,
+    backupCount=1
+)
+utils_logger.addHandler(custom_handler)
+utils_logger.propagate = False
 
 
 def string_to_operator(value: str) -> Callable[[Numeric, Numeric], Numeric]:
@@ -24,6 +27,13 @@ def string_to_operator(value: str) -> Callable[[Numeric, Numeric], Numeric]:
     Convert string to arithmetic function
     :param value: basic arithmetic function
     """
+    utils_logger.debug('test debug')
+    utils_logger.info('test info')
+    utils_logger.warning('test warning')
+    utils_logger.error('test error')
+    utils_logger.critical('test ctitical')
+
+
     if not isinstance(value, str):
         utils_logger.error(f"wrong operator type {value}")
         raise ValueError("wrong operator type")
@@ -33,4 +43,3 @@ def string_to_operator(value: str) -> Callable[[Numeric, Numeric], Numeric]:
         raise ValueError("wrong operator value")
 
     return OPERATORS[value]
-

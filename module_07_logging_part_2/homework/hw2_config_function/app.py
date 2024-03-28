@@ -2,6 +2,7 @@ import logging
 import sys
 from utils import string_to_operator
 
+
 app_logger = logging.getLogger('app_logger')
 custom_handler = logging.StreamHandler()
 formatter = logging.Formatter(fmt='%(name)s || %(levelname)s || %(message)s')
@@ -40,3 +41,6 @@ def calc(args):
 if __name__ == '__main__':
     # calc(sys.argv[1:])
     calc('2+3')
+    print(
+        '\n\t', app_logger, app_logger.parent,
+    )
