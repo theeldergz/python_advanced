@@ -32,12 +32,43 @@ class Seller(threading.Thread):
         logger.info(f'Seller {self.name} sold {self.tickets_sold} tickets')
 
     def random_sleep(self) -> None:
-        time.sleep(random.randint(0, 1))
+        time.sleep(random.random())
+
+
+class Director(threading.Thread):
+    def __init__(self, semaphore: threading.Semaphore) -> None:
+        super().__init__()
+        self.sem: threading.Semaphore = semaphore
+        self.available_seats: int = 200
+        logger.info('Director started work')
+
+    def run(self) -> None:
+        global TOTAL_TICKETS
+        logger.info(TOTAL_TICKETS)
+        is_running: bool = True
+        while is_running:
+            with self.sem:
+                if TOTAL_TICKETS <= 0:
+                    break
+                if TOTAL_TICKETS <= 4:
+                    TOTAL_TICKETS += 4
+                    self.available_seats -= 4
+                    logger.info(f'{self.name} Director print {4} tickets')
+                    logger.info(f'Available seats: {self.available_seats}')
+                if self.available_seats <= 0:
+                    is_running: bool = False
+                    logger.info('All seats occupied')
+
+
 
 
 def main() -> None:
     semaphore: threading.Semaphore = threading.Semaphore()
     sellers: List[Seller] = []
+
+    director = Director(semaphore)
+    director.start()
+
     for _ in range(4):
         seller = Seller(semaphore)
         seller.start()
@@ -45,6 +76,8 @@ def main() -> None:
 
     for seller in sellers:
         seller.join()
+
+
 
 
 if __name__ == '__main__':

@@ -13,27 +13,19 @@ class Philosopher(threading.Thread):
 
     def __init__(self, left_fork: threading.Lock, right_fork: threading.Lock) -> None:
         super().__init__()
-        self.left_fork: threading.Lock = left_fork
-        self.right_fork: threading.Lock = right_fork
+        self.left_fork: threading.Lock = threading.Lock()
+        self.right_fork: threading.Lock = threading.Lock()
 
     def run(self) -> None:
         while self.running:
             logger.info(f'Philosopher {self.name} start thinking.')
             time.sleep(random.randint(1, 10))
             logger.info(f'Philosopher {self.name} is hungry.')
-            try:
-                self.left_fork.acquire()
+            with self.left_fork:
                 logger.info(f'Philosopher {self.name} acquired left fork')
-                if self.right_fork.locked():
-                    continue
-                try:
-                    self.right_fork.acquire()
+                with self.right_fork:
                     logger.info(f'Philosopher {self.name} acquired right fork')
                     self.dining()
-                finally:
-                    self.right_fork.release()
-            finally:
-                self.left_fork.release()
 
     def dining(self) -> None:
         logger.info(f'Philosopher {self.name} starts eating.')
