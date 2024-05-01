@@ -32,7 +32,7 @@ def load_images_sequential() -> None:
 def load_images_multithreading() -> None:
     start: float = time.time()
     threads: List[threading.Thread] = []
-    for i in range(10):
+    for i in range(1000):
         thread = threading.Thread(target=get_image, args=(URL, OUT_PATH.format(i)))
         thread.start()
         threads.append(thread)
@@ -46,7 +46,7 @@ def load_images_multithreading() -> None:
 def load_images_multiprocessing() -> None:
     start: float = time.time()
     procs: List[multiprocessing.Process] = []
-    for i in range(10):
+    for i in range(1000):
         proc = multiprocessing.Process(
             target=get_image,
             args=(URL, OUT_PATH.format(i)),

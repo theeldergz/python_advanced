@@ -26,17 +26,17 @@ def apply_async():
     logger.info(f'Time taken in seconds - {end - start}')
 
 
-def map():
-    pool = Pool(processes=2)
-    start = time.time()
-    input_values = [500, 500]
-    result = pool.map_async(task, input_values)
-    pool.close()
-    pool.join()
-    logger.info(result)
-    logger.info(result.get(timeout=1))
-    end = time.time()
-    logger.info(f'Time taken in seconds - {end - start}')
+# def map():
+#     pool = Pool(processes=2)
+#     start = time.time()
+#     input_values = [500, 500]
+#     result = pool.map_async(task, input_values)
+#     pool.close()
+#     pool.join()
+#     logger.info(result)
+#     logger.info(result.get(timeout=1))
+#     end = time.time()
+#     logger.info(f'Time taken in seconds - {end - start}')
 
 
 def high_load_map():
