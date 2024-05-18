@@ -15,7 +15,7 @@ def register(username: str, password: str) -> None:
 
 def hack() -> None:
     username: str = "I like"
-    password: str = """SQL Injection'); UPDATE `table_users` SET username = 'sql_admin', password = 'my_new_pass' -- """
+    password: str = "SQL Injection"
     register(username, password)
 
 
