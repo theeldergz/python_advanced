@@ -10,12 +10,11 @@ def register(username: str, password: str) -> None:
             VALUES ('{username}', '{password}')  
             """
         )
-        conn.commit()
 
 
 def hack() -> None:
     username: str = "I like"
-    password: str = "SQL Injection"
+    password: str = """SQL Injection'); UPDATE `table_users` SET username = 'sql_admin', password = 'my_new_pass' -- """
     register(username, password)
 
 
