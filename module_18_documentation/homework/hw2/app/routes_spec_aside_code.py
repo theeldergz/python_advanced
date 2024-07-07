@@ -4,6 +4,7 @@ from flasgger import APISpec, Swagger
 from flask import Flask, request
 from flask_restful import Api, Resource
 from marshmallow import ValidationError
+from werkzeug.serving import WSGIRequestHandler
 
 from models import (
     DATA,
@@ -34,9 +35,12 @@ class BookList(Resource):
         return schema.dump(book), 201
 
 
-swagger = Swagger(app, template_file='../swagger.json')
+
+swagger = Swagger(app, template_file='../../../materials/rest_app_example/swagger.json')
 api.add_resource(BookList, '/api/books')
 
+
 if __name__ == '__main__':
+    WSGIRequestHandler.protocol_version = "HTTP/1.1"
     init_db(initial_records=DATA)
-    app.run('0.0.0.0', debug=True)
+    app.run('127.0.0.1', debug=True)

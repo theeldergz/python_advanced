@@ -1,0 +1,14 @@
+tags:
+  - Edit books
+responses:
+  200:
+    description: Изменить книгу
+parameters:
+  - in: path
+    name: id книги
+    type: string
+  -  in: body
+     name: id книги для изменения
+     schema:
+       items:
+         $ref: '#/definitions/Book'
