@@ -1,0 +1,100 @@
+{
+  "definitions": {
+    "Author": {
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "author_id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "first_name",
+        "last_name"
+      ],
+      "type": "object"
+    },
+    "Book": {
+      "$ref": "#/definitions/Author"
+    }
+  },
+  "info": {
+    "title": "BooksList",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/authors": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Данные по автору",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Author"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "summary": "Метод возвращает все книги автора",
+        "tags": [
+          "Authors"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Данные нового автора",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Автор успешно создан",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          }
+        },
+        "summary": "Метод для создания автора",
+        "tags": [
+          "Authors"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Удаление автора по ID",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Автор успешно удален",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          }
+        },
+        "summary": "Метод для удаления автора",
+        "tags": [
+          "Authors"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0"
+}

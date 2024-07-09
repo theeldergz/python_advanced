@@ -1,0 +1,15 @@
+tags:
+  - Edit books
+responses:
+  200:
+    description: Удалить книгу по ее ID
+parameters:
+  - in: path
+    name: id книги
+    type: string
+  -  in: body
+     name: id книги для удаления
+     schema:
+       items:
+         $ref: '#/definitions/Book'
+

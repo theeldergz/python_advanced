@@ -1,0 +1,21 @@
+tags:
+  - books
+responses:
+  200:
+    description: Add book
+parameters:
+  -  in: body
+     name: new book params
+     schema:
+       items:
+         $ref: '#/definitions/Book'
+schema:
+  type: array
+  items:
+    $ref: '#/definitions/Book'
+  400:
+    description: Add book
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Book'
