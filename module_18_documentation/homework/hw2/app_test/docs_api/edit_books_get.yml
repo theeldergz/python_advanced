@@ -1,0 +1,15 @@
+tags:
+  - Edit books
+responses:
+  200:
+    description: Получение книги по id
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Book'
+parameters:
+ - in: path
+   name: book id
+   type: string
+   schema:
+     $ref: '#/definitions/Book'
